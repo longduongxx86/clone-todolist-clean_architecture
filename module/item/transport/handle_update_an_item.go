@@ -18,8 +18,8 @@ import (
 // @Tags        todos
 // @Accept      json
 // @Produce     json
-// @Param       id       path                        string true "id"
-// @Param       dataItem body     todomodel.ToDoItem true   "updateTodo"
+// @Param       id       path     string             true "id"
+// @Param       dataItem body     todomodel.ToDoItem true "updateTodo"
 // @Success     200      {object} todomodel.ToDoItem
 // @Failed      400 string "Bad request"
 // @Failed      404 string "Not found"
