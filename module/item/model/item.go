@@ -2,7 +2,6 @@ package todomodel
 
 import (
 	"errors"
-	"time"
 )
 
 var (
@@ -11,15 +10,16 @@ var (
 	ErrCannotUpdateFinishedItem = errors.New("can not update finished item")
 )
 
+// @Description User account information
+// @Description with user id and username
 type ToDoItem struct {
-	Id        int        `json:"id" gorm:"column:id;"`
-	Title     string     `json:"title" gorm:"column:title;"`
-	Status    string     `json:"status" gorm:"column:status;"`
-	CreatedAt *time.Time `json:"created_at" gorm:"column:created_at;"`
-	UpdatedAt *time.Time `json:"updated_at" gorm:"column:updated_at;"`
+	Id        string `json:"id" gorm:"column:id;"`
+	Title     string `json:"title" gorm:"column:title;"`
+	Completed bool   `json:"status" gorm:"column:completed;"`
+	IsShow    bool   `json:"is_show" gorm:"column:is_show;"`
 }
 
-func (ToDoItem) TableName() string { return "todo_items" }
+func (ToDoItem) TableName() string { return "todolist_list" }
 
 func (item ToDoItem) Validate() error {
 	if item.Title == "" {

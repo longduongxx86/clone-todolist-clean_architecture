@@ -1,41 +1,53 @@
 package main
 
 import (
+	_ "first-app/docs"
 	"log"
-	"os"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
 	todotrpt "first-app/module/item/transport"
 )
 
+// @title         Todolist 
+// @version       1.0
+// @description   Todolist API using Swaggo
+// @contact.name  DuongBaoLong
+// @contact.email longduongxx86@gmail.com
+// @host          localhost:8080
+// @BasePath      /
 func main() {
-	// Checking that an environment variable is present or not.
-	mysqlConnStr, ok := os.LookupEnv("MYSQL_CONNECTION")
+	dsn := "host=localhost user=postgres password=Nguyenthuyngan00 dbname=todolist port=5432 sslmode=disable"
 
-	if !ok {
-		log.Fatalln("Missing MySQL connection string.")
-	}
-
-	dsn := mysqlConnStr
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
-		log.Fatalln("Cannot connect to MySQL:", err)
+		log.Fatalln("Cannot connect to PostgreSQL:", err)
 	}
-
+ 
 	router := gin.Default()
 
-	v1 := router.Group("/v1")
+	v1 := router.Group("")
 	{
-		v1.POST("/items", todotrpt.HandleCreateItem(db))         // create item
-		v1.GET("/items", todotrpt.HandleListItem(db))            // list items
-		v1.GET("/items/:id", todotrpt.HandleFindAnItem(db))      // get an item by ID
-		v1.PUT("/items/:id", todotrpt.HandleUpdateAnItem(db))    // edit an item by ID
-		v1.DELETE("/items/:id", todotrpt.HandleDeleteAnItem(db)) // delete an item by ID
+		
+		v1.POST("/todos", todotrpt.HandleCreateItem(db))
+
+		v1.GET("/todos", todotrpt.HandleListItem(db))
+
+		v1.GET("/todos/:id", todotrpt.HandleFindAnItem(db))
+	
+		v1.PUT("/todos/:id", todotrpt.HandleUpdateAnItem(db))
+
+		v1.DELETE("/todos/:id", todotrpt.HandleDeleteAnItem(db))
+
 	}
+
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	router.Run()
 }

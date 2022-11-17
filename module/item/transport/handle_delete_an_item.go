@@ -2,7 +2,6 @@ package todotrpt
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -11,14 +10,21 @@ import (
 	todostorage "first-app/module/item/storage"
 )
 
+// GetATodo godoc
+//
+// @Sumary      Delete a Todo
+// @Description delete a todo
+// @Tags        todos
+// @Accept      json
+// @Produce     json
+// @Param       id  path     string true "id"
+// @Success     200 {object} object
+// @Failed      400 string "Bad request"
+// @Failed      404 string "Not found"
+// @Router      /todos/{id} [delete]
 func HandleDeleteAnItem(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		id, err := strconv.Atoi(c.Param("id"))
-
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
+		id := c.Param("id")
 
 		storage := todostorage.NewMySQLStorage(db)
 		biz := todobiz.NewDeleteToDoItemBiz(storage)

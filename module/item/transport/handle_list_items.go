@@ -11,6 +11,15 @@ import (
 	todostorage "first-app/module/item/storage"
 )
 
+// GetAllTodo godoc
+//
+// @Sumary      Get All  Todo
+// @Description gel all  todo
+// @Tags        todos
+// @Accept      json
+// @Produce     json
+// @Success     200 {array} todomodel.ToDoItem
+// @Router      /todos [get]
 func HandleListItem(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var paging todomodel.DataPaging

@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func (s *mysqlStorage) FindItem(
+func (s *postGresStorage) FindItem(
 	ctx context.Context,
 	condition map[string]interface{},
 ) (*todomodel.ToDoItem, error) {

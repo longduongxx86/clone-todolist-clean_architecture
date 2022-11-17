@@ -5,7 +5,7 @@ import (
 	todomodel "first-app/module/item/model"
 )
 
-func (s *mysqlStorage) UpdateItem(
+func (s *postGresStorage) UpdateItem(
 	ctx context.Context,
 	condition map[string]interface{},
 	dataUpdate *todomodel.ToDoItem,

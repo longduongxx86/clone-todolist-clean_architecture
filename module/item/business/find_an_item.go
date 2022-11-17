@@ -6,10 +6,7 @@ import (
 )
 
 type FindTodoItemStorage interface {
-	FindItem(
-		ctx context.Context,
-		condition map[string]interface{},
-	) (*todomodel.ToDoItem, error)
+	FindItem(ctx context.Context, condition map[string]interface{}) (*todomodel.ToDoItem, error)
 }
 
 type findBiz struct {

@@ -6,7 +6,7 @@ import (
 	todomodel "first-app/module/item/model"
 )
 
-func (s *mysqlStorage) ListItem(
+func (s *postGresStorage) ListItem(
 	ctx context.Context,
 	condition map[string]interface{},
 	paging *todomodel.DataPaging,

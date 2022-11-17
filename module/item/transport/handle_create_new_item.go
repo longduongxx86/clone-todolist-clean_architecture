@@ -7,11 +7,25 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 
+	uuid "github.com/google/uuid"
+
 	todobiz "first-app/module/item/business"
 	todomodel "first-app/module/item/model"
 	todostorage "first-app/module/item/storage"
 )
 
+// CreateTodo godoc
+//
+// @Sumary      Create  Todo
+// @Description create  todo
+// @Tags        todos
+// @Accept      json
+// @Produce     json
+// @Param       dataItem body     todomodel.ToDoItem true "newTodo"
+// @Success     200      {object} todomodel.ToDoItem
+// @Failed      400 string "Bad request"
+// @Failed      404 string "Not found"
+// @Router      /todos [post]
 func HandleCreateItem(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var dataItem todomodel.ToDoItem
@@ -21,10 +35,9 @@ func HandleCreateItem(db *gorm.DB) gin.HandlerFunc {
 			return
 		}
 
-		// preprocess title - trim all spaces
 		dataItem.Title = strings.TrimSpace(dataItem.Title)
+		dataItem.Id = uuid.New().String()
 
-		// setup dependencies
 		storage := todostorage.NewMySQLStorage(db)
 		biz := todobiz.NewCreateToDoItemBiz(storage)
 

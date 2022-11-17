@@ -5,10 +5,7 @@ import (
 	todomodel "first-app/module/item/model"
 )
 
-func (s *mysqlStorage) DeleteItem(
-	ctx context.Context,
-	condition map[string]interface{},
-) error {
+func (s *postGresStorage) DeleteItem( ctx context.Context, condition map[string]interface{}, ) error {
 
 	if err := s.db.
 		Table(todomodel.ToDoItem{}.TableName()).

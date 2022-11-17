@@ -39,7 +39,7 @@ func (biz *updateBiz) UpdateItem(
 	}
 
 	// just a demo in case we dont allow update Finished item
-	if oldItem.Status == "Finished" {
+	if oldItem.Completed {
 		return todomodel.ErrCannotUpdateFinishedItem
 	}
 
